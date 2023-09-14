@@ -1,1 +1,1 @@
-# Natural Language Communication – IR-Based Question Answering Chatbot
+# Information Retrieval Based Factoid Question Answering Chatbot
