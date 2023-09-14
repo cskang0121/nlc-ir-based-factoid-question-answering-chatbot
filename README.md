@@ -1,1 +1,1 @@
-# nlc-ir-based-factoid-question-answering-chatbot
+# Natural Language Communication – IR-Based Question Answering Chatbot
