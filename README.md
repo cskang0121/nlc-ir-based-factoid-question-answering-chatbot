@@ -7,21 +7,22 @@
 
 ### Overview
 This project endeavors to investigate various methodologies for the implementation of an **Information Retrieval (IR)-based Question Answering Chatbot**, as a crucial component of my research and studies in natural language communication. The high level view of the architecture of the information retrieval system is as follows:
-![Screenshot 2023-09-14 at 9 42 33 PM](https://github.com/cskang0121/nlc-ir-based-factoid-question-answering-chatbot/assets/79074359/43637109-25bc-4dbf-870d-a1c38f4e361d)
+<img width="807" alt="Screenshot 2023-09-14 at 10 57 10 PM" src="https://github.com/cskang0121/nlc-ir-based-factoid-question-answering-chatbot/assets/79074359/d82703ce-2553-48bc-9e30-04dc215907f0">
 
 - The model performs indexing at the paragraph level rather than the document level. This allows the model to provide more fine-grained results based on user questions.
 - The model calculates similarity scores between a query vector and stored data using three distinct mechanisms, namely:
 
 &nbsp;&nbsp;**(1) Traditional TF-IDF computation**
 
-![Screenshot 2023-09-14 at 10 40 36 PM](https://github.com/cskang0121/nlc-ir-based-factoid-question-answering-chatbot/assets/79074359/04f33a8e-641a-424c-bfeb-15a97de8a6a3)
+<img width="840" alt="Screenshot 2023-09-14 at 10 58 20 PM" src="https://github.com/cskang0121/nlc-ir-based-factoid-question-answering-chatbot/assets/79074359/84f38ebd-e425-4602-83a4-b10cd1478c1c">
 
 &nbsp;&nbsp;**(2) Consine Similarity**
-![Screenshot 2023-09-14 at 10 41 38 PM](https://github.com/cskang0121/nlc-ir-based-factoid-question-answering-chatbot/assets/79074359/84c2c9fe-4c18-44af-9530-3184d3175001)
+
+<img width="859" alt="Screenshot 2023-09-14 at 10 58 57 PM" src="https://github.com/cskang0121/nlc-ir-based-factoid-question-answering-chatbot/assets/79074359/02e1a8d6-4153-40ab-bfe7-33aeae053933">
 
 &nbsp;&nbsp;**(3) BM25 Score Function**
-![Screenshot 2023-09-14 at 10 42 49 PM](https://github.com/cskang0121/nlc-ir-based-factoid-question-answering-chatbot/assets/79074359/f9f8b3f0-9ac9-4162-9ceb-5a5af327ca96)
 
+<img width="835" alt="Screenshot 2023-09-14 at 10 59 44 PM" src="https://github.com/cskang0121/nlc-ir-based-factoid-question-answering-chatbot/assets/79074359/391a7627-710d-436d-adb2-09b769d3162e">
 
 ### Technologies & Datasets
 &nbsp;&nbsp;[`Python 3.10`](https://www.python.org/downloads/)
