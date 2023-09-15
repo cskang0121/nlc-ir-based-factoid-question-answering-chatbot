@@ -3,10 +3,11 @@
 ## Individual Project Completed By
 - SMU Computer Science Year 4 – Kang Chin Shen (cskang.2020@scis.smu.edu.sg)
 
-## Problem Statement
+## Motivation
+NLP has emerged as one of the most prominent subjects in recent years, particularly following the debut of ChatGPT-3.5 in June 2022. This project endeavours to investigate various methodologies for the implementation of an **Information Retrieval (IR)-based Question Answering Chatbot**, as a crucial component of my research and studies in natural language communication. 
 
 ### Overview
-This project endeavors to investigate various methodologies for the implementation of an **Information Retrieval (IR)-based Question Answering Chatbot**, as a crucial component of my research and studies in natural language communication. The high level view of the architecture of the information retrieval system is as follows:
+The high level view of the architecture of the information retrieval system is as follows:
 <img width="807" alt="Screenshot 2023-09-14 at 10 57 10 PM" src="https://github.com/cskang0121/nlc-ir-based-factoid-question-answering-chatbot/assets/79074359/d82703ce-2553-48bc-9e30-04dc215907f0">
 
 - The model performs indexing at the paragraph level rather than the document level. This allows the model to provide more fine-grained results based on user questions.
