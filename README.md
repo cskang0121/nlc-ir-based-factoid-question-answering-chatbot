@@ -44,7 +44,7 @@ This project endeavors to investigate various methodologies for the implementati
 - |d|: Vector distance of paragraph vector
 - df(t): Paragraph frequency of t (i.e., Document Frequency in general)
 
-&nbsp;&nbsp;**(3) BM25 Score Function**
+&nbsp;&nbsp;**(3) Okapi BM25**
 <img width="852" alt="Screenshot 2023-09-15 at 9 37 56 AM" src="https://github.com/cskang0121/nlc-ir-based-factoid-question-answering-chatbot/assets/79074359/d5d1f422-0a59-45fa-b639-e1cc481285c9">
 
 - q: Query vector
