@@ -27,7 +27,7 @@ This project endeavors to investigate various methodologies for the implementati
 - df(t): Paragraph frequency of t (i.e., Document Frequency in general)
 
 &nbsp;&nbsp;**(2) Consine Similarity**
-<img width="859" alt="Screenshot 2023-09-14 at 10 58 57 PM" src="https://github.com/cskang0121/nlc-ir-based-factoid-question-answering-chatbot/assets/79074359/02e1a8d6-4153-40ab-bfe7-33aeae053933">
+<img width="854" alt="Screenshot 2023-09-15 at 10 12 03 AM" src="https://github.com/cskang0121/nlc-ir-based-factoid-question-answering-chatbot/assets/79074359/8298690b-0865-4894-9565-78e0623d586f">
 
 &nbsp;&nbsp;**Terms' Explanatioin**:
 
@@ -45,7 +45,9 @@ This project endeavors to investigate various methodologies for the implementati
 - df(t): Paragraph frequency of t (i.e., Document Frequency in general)
 
 &nbsp;&nbsp;**(3) Okapi BM25**
-<img width="852" alt="Screenshot 2023-09-15 at 9 37 56 AM" src="https://github.com/cskang0121/nlc-ir-based-factoid-question-answering-chatbot/assets/79074359/d5d1f422-0a59-45fa-b639-e1cc481285c9">
+<img width="818" alt="Screenshot 2023-09-15 at 10 12 22 AM" src="https://github.com/cskang0121/nlc-ir-based-factoid-question-answering-chatbot/assets/79074359/d24e178f-1421-4096-8b4b-18e8deea082a">
+
+&nbsp;&nbsp;**Terms' Explanatioin**:
 
 - q: Query vector
 - d: Paragraph vector (i.e., document vector in general – indexing is performed at paragraph level)
@@ -57,7 +59,7 @@ This project endeavors to investigate various methodologies for the implementati
 - k: A knob to adjust the balance between TF and IDF
   - k = 1.2 is used in this project
 - b: A value to control the importance of document length normalisation
-  – b = 0.75 is used is this project 
+  - b = 0.75 is used is this project 
 - |d|: Vector distance of paragraph vector
   - Note that vector distance is absolute number of words in d
 - |d(avg)|: Average vector distance of paragraph vector
