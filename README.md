@@ -72,7 +72,27 @@ This project endeavors to investigate various methodologies for the implementati
 &nbsp;&nbsp;[`Stanford Question Answering Datasets`](https://rajpurkar.github.io/SQuAD-explorer/)
 
 ## Repository High Level Architecture
+```
+| nlc-ir-based-factoid-question-answering-chatbot       # Root folder
 
+    | dataset                   # 12 topics downloaded from 'Standford Question Answering Datasets'
+
+    StanfordDataset.py          # Loading of the downloaded datasets
+
+    DocumentRetrievalModel.py   # Implementation of the core logic
+
+    P2.py                       # Entry point of the chatbot
+
+    testQA.py                   # Evaluation of the chatbot performance
+
+    DataExtractor.py            # Tagging of temporal expressions in text
+
+    ProcessedQuestion.py        # Query Formulation
+
+    README.md                   # Code documentation
+
+    Other files 
+```
 ## Model Design
 
 ## Running The Code
