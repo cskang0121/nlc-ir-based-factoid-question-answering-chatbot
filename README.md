@@ -12,17 +12,57 @@ This project endeavors to investigate various methodologies for the implementati
 - The model performs indexing at the paragraph level rather than the document level. This allows the model to provide more fine-grained results based on user questions.
 - The model calculates similarity scores between a query vector and stored data using three distinct mechanisms, namely:
 
-&nbsp;&nbsp;**(1) Traditional TF-IDF computation**
+&nbsp;&nbsp;**(1) Traditional TF-IDF**
+<img width="840" alt="Screenshot 2023-09-15 at 9 36 41 AM" src="https://github.com/cskang0121/nlc-ir-based-factoid-question-answering-chatbot/assets/79074359/cb09bf87-9469-4511-9580-57f0c20983a1">
 
-<img width="840" alt="Screenshot 2023-09-14 at 10 58 20 PM" src="https://github.com/cskang0121/nlc-ir-based-factoid-question-answering-chatbot/assets/79074359/84f38ebd-e425-4602-83a4-b10cd1478c1c">
+&nbsp;&nbsp;**Terms' Explanatioin**:
+
+- q: Query vector
+- d: Paragraph vector (i.e., document vector in general – indexing is performed at paragraph level)
+- t: Term
+- tf(t,d): Term frequency of t in d
+- idf(t): Inverted Paragraph Frequency (i.e., Inverted Document Frequency in general)
+- |d|: Vector distance of paragraph vector
+- count(t,d): Raw frequency of t in d
+- df(t): Paragraph frequency of t (i.e., Document Frequency in general)
 
 &nbsp;&nbsp;**(2) Consine Similarity**
-
 <img width="859" alt="Screenshot 2023-09-14 at 10 58 57 PM" src="https://github.com/cskang0121/nlc-ir-based-factoid-question-answering-chatbot/assets/79074359/02e1a8d6-4153-40ab-bfe7-33aeae053933">
 
-&nbsp;&nbsp;**(3) BM25 Score Function**
+&nbsp;&nbsp;**Terms' Explanatioin**:
 
-<img width="835" alt="Screenshot 2023-09-14 at 10 59 44 PM" src="https://github.com/cskang0121/nlc-ir-based-factoid-question-answering-chatbot/assets/79074359/391a7627-710d-436d-adb2-09b769d3162e">
+- q: Query vector
+- d: Paragraph vector (i.e., document vector in general – indexing is performed at paragraph level)
+- t: Term
+- tf(t,q): Term frequency of t in q
+  - Note that tf(t,q) is raw frequency without applying any logarithm function
+- tf(t,d): Term frequency of t in d
+  - Note that tf(t,d) is raw frequency without applying any logarithm function
+- idf(t): Inverted Paragraph Frequency (i.e., Inverted Document Frequency in general)
+  - Note that Laplace Smoothing technique is applied here
+- |q|: Vector distance of query vector
+- |d|: Vector distance of paragraph vector
+- df(t): Paragraph frequency of t (i.e., Document Frequency in general)
+
+&nbsp;&nbsp;**(3) BM25 Score Function**
+<img width="852" alt="Screenshot 2023-09-15 at 9 37 56 AM" src="https://github.com/cskang0121/nlc-ir-based-factoid-question-answering-chatbot/assets/79074359/d5d1f422-0a59-45fa-b639-e1cc481285c9">
+
+- q: Query vector
+- d: Paragraph vector (i.e., document vector in general – indexing is performed at paragraph level)
+- t: Term
+- N: Total number of paragraphs
+- df(t): Paragraph frequency of t (i.e., Document Frequency in general)
+- tf(t,d): Term frequency of t in d
+  - Note that tf(t,d) is raw frequency without applying any logarithm function
+- k: A knob to adjust the balance between TF and IDF
+  - k = 1.2 is used in this project
+- b: A value to control the importance of document length normalisation
+  – b = 0.75 is used is this project 
+- |d|: Vector distance of paragraph vector
+  - Note that vector distance is absolute number of words in d
+- |d(avg)|: Average vector distance of paragraph vector
+- count(t,d): Raw frequency of t in d
+- idf(t): Inverted Paragraph Frequency (i.e., Inverted Document Frequency in general)
 
 ### Technologies & Datasets
 &nbsp;&nbsp;[`Python 3.10`](https://www.python.org/downloads/)
