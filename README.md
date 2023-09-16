@@ -18,7 +18,8 @@ The high level view of the architecture of the information retrieval system is a
   (2) Cosine Similarity Model
 
   (3) Okapi BM25 Model
-
+- Note that the default setting is Okapi BM25 Model (as it outperformed the rest).
+  
 ### Technologies & Datasets
 &nbsp;&nbsp;[`Python 3.10`](https://www.python.org/downloads/)
 &nbsp;&nbsp;[`NLTK 3.5`](https://www.nltk.org/install.html)
@@ -292,6 +293,13 @@ def computeAvgSentLength(self, sentenceInfo, totalSents):
 - Averaged Overall Accuracy: 75.640%
 
 ## Running The Code
+1. Run the command ```git clone https://github.com/cskang0121/nlc-ir-based-factoid-question-answering-chatbot.git``` in a new terminal on your local machine.
+2. ```cd``` to ```nlc-ir-based-factoid-question-answering-chatbot``` folder.
+
+3.1. To evaluate the model: Run ```python testQA.py```
+
+3.2. To interact with the model: Run ```python P2.py dataset/<dataset>.txt```
+   - Note that dataset can chosen from ```/dataset``` folder, e.g., ```python P2.py dataset/Marvel_Comics.txt```
 
 ## Credits
 > Special thanks to **Vaibhaw Raj** for providing the base implementation of this project!
