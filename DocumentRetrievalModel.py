@@ -41,6 +41,12 @@ class DocumentRetrievalModel:
             
         # Initialize
         self.computeTFIDF()
+
+        # Set the required hyperparameters for BM25 function 
+        self.k = 1.2
+        self.b = 0.75
+        self.avgParaLength = self.computeAvgParaLength()
+
         
     # Return term frequency for Paragraph
     # Input:
@@ -90,10 +96,25 @@ class DocumentRetrievalModel:
                 else:
                     wordParagraphFrequency[word] = 1
         
-        self.idf = {}
+        
+        #####################################################################################
+        # # Compute IDF 
+        # # Traditional TF-IDF Model
+        # self.idf = {}
+        # for word in wordParagraphFrequency:
+        #     self.idf[word] = math.log((self.totalParas/wordParagraphFrequency[word]), 10)
+
+        # # Compute IDF with Laplace Smoothing 
+        # # Cosine Similarity Model
+        # self.idf = {}
+        # for word in wordParagraphFrequency:
+        #     self.idf[word] = math.log((self.totalParas+1)/wordParagraphFrequency[word])
+
+        # Compute IDF 
+        # Okapi BM25 Model        
         for word in wordParagraphFrequency:
-            # Adding Laplace smoothing by adding 1 to total number of documents
-            self.idf[word] = math.log((self.totalParas+1)/wordParagraphFrequency[word])
+            self.idf[word] = math.log((self.totalParas/wordParagraphFrequency[word]), 10)
+        #####################################################################################
         
         #Compute Paragraph Vector
         for index in range(0,len(self.paragraphInfo)):
@@ -220,7 +241,17 @@ class DocumentRetrievalModel:
             return [None]
         pRanking = []
         for index in range(0,len(self.paragraphInfo)):
-            sim = self.computeSimilarity(self.paragraphInfo[index], queryVector, queryVectorDistance)
+            #####################################################################################
+            # # Call model to compute similarity
+            # # Traditional TF-IDF Model
+            # # Cosine Similarity Model
+            # sim = self.computeSimilarity(self.paragraphInfo[index], queryVector, queryVectorDistance)
+            #####################################################################################
+            # # Call model to compute similarity
+            # # Okapi BM25 Model
+            sim = self.computeBM25Similarity(self.paragraphInfo[index], queryVector, self.avgParaLength, self.idf)
+            #####################################################################################
+
             pRanking.append((index,sim))
         
         return sorted(pRanking,key=lambda tup: (tup[1],tup[0]), reverse=True)[:3]
@@ -242,7 +273,19 @@ class DocumentRetrievalModel:
         if(pVectorDistance == 0):
             return 0
 
-        # Computing dot product
+        #####################################################################################
+        # # Compute Similarity
+        # # Traditional TF-IDF Model
+        # total = 0
+        # for word in queryVector.keys():
+        #     if word in pInfo['wF']:
+        #         w = math.log(pInfo['wF'][word]+1, 10)
+        #         idf = self.idf[word]
+        #         total += w*idf
+        # sim = total / pVectorDistance
+        #####################################################################################
+        # # Compute Similarity
+        # # Cosine Similarity Model
         dotProduct = 0
         for word in queryVector.keys():
             if word in pInfo['wF']:
@@ -250,10 +293,11 @@ class DocumentRetrievalModel:
                 w = pInfo['wF'][word]
                 idf = self.idf[word]
                 dotProduct += q*w*idf*idf
-        
         sim = dotProduct / (pVectorDistance * queryDistance)
+        #####################################################################################
+
         return sim
-    
+
     # Get most relevant sentences using unigram similarity between question
     # sentence and sentence in paragraph containing potential answer
     # Input:
@@ -266,14 +310,48 @@ class DocumentRetrievalModel:
     #                                 similarity coefficient
     def getMostRelevantSentences(self, sentences, pQ, nGram=3):
         relevantSentences = []
-        for sent in sentences:
-            sim = 0
-            if(len(word_tokenize(pQ.question))>nGram+1):
-                sim = self.sim_ngram_sentence(pQ.question,sent,nGram)
-            else:
-                sim = self.sim_sentence(pQ.qVector, sent)
-            relevantSentences.append((sent,sim))
-        
+
+        #####################################################################################
+        # # Retrive most relevant sentences
+        # # Traditional TF-IDF Model
+        # # Cosine Similarity Model
+        # for sent in sentences:
+        #     sim = 0
+        #     if(len(word_tokenize(pQ.question))>nGram+1):
+        #         sim = self.sim_ngram_sentence(pQ.question,sent,nGram)
+        #     else:
+        #         sim = self.sim_sentence(pQ.qVector, sent)
+        #     relevantSentences.append((sent,sim))
+        #####################################################################################
+        # Retrive most relevant sentences
+        # Okapi BM25 Model
+        totalSents = len(sentences)
+
+        sentenceInfo = {}
+        for index in range(0,len(sentences)):
+            wordFrequency = self.getTermFrequencyCount(sentences[index])
+            sentenceInfo[index] = {}
+            sentenceInfo[index]['wF'] = wordFrequency
+
+        wordSentenceFrequency = {}
+        for index in range(0,len(sentences)):
+            for word in sentenceInfo[index]['wF'].keys():
+                if word in wordSentenceFrequency.keys():
+                    wordSentenceFrequency[word] += 1
+                else:
+                    wordSentenceFrequency[word] = 1
+
+        sentIdf = {} 
+        for word in wordSentenceFrequency:
+            sentIdf[word] = math.log((totalSents/wordSentenceFrequency[word]), 10)
+
+        avgSentLength = self.computeAvgSentLength(sentenceInfo, totalSents)
+
+        for index in range(0,len(sentenceInfo)):
+            sim = self.computeBM25Similarity(sentenceInfo[index], pQ.qVector, avgSentLength, sentIdf)
+            relevantSentences.append((sentences[index],sim))
+        #####################################################################################
+
         return sorted(relevantSentences,key=lambda tup:(tup[1],tup[0]),reverse=True)
     
     # Compute ngram similarity between a sentence and question
@@ -403,3 +481,43 @@ class DocumentRetrievalModel:
         msg += "Total Unique Word " + str(len(self.idf)) + "\n"
         msg += str(self.getMostSignificantWords())
         return msg
+
+    #####################################################################################
+    # Compute Similarity
+    # Okapi BM25 Model  
+    def computeBM25Similarity(self, context, queryVector, avgVectorLength, contextIdf):
+        vectorDistance = sum(context['wF'].values())
+        
+        sim = 0
+        for word in queryVector.keys():
+            if word in context['wF']:
+
+                # IDF
+                idf = contextIdf[word]
+                
+                # Weighted TF
+                w = math.log(context['wF'][word]+1, 10)
+                w = w / (self.k * (1 - self.b + (self.b * vectorDistance / avgVectorLength)) + w)
+
+                sim += idf * w
+        
+        return sim
+    #####################################################################################
+
+    # Compute average paragraph length
+    def computeAvgParaLength(self):
+        totalWordCounts = 0
+        for index in self.paragraphInfo.keys():
+            totalWordCounts += sum(self.paragraphInfo[index]['wF'].values())
+        avgParaLength = totalWordCounts / self.totalParas
+
+        return avgParaLength
+
+    # Compute average sentence length
+    def computeAvgSentLength(self, sentenceInfo, totalSents):
+        totalWordCounts = 0
+        for index in sentenceInfo.keys():
+            totalWordCounts += sum(sentenceInfo[index]['wF'].values())
+        avgSentLength = totalWordCounts / totalSents
+
+        return avgSentLength
