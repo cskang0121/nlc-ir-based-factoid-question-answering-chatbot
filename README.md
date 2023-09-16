@@ -299,7 +299,7 @@ def computeAvgSentLength(self, sentenceInfo, totalSents):
 3.1. To evaluate the model: Run ```python testQA.py```
 
 3.2. To interact with the model: Run ```python P2.py dataset/<dataset>.txt```
-   - Note that dataset can chosen from ```/dataset``` folder, e.g., ```python P2.py dataset/Marvel_Comics.txt```
+   - Note that dataset can be chosen from ```/dataset``` folder, e.g., ```python P2.py dataset/Marvel_Comics.txt```
 
 ## Credits
 > Special thanks to **Vaibhaw Raj** for providing the base implementation of this project!
